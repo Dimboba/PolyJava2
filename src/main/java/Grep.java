@@ -9,7 +9,7 @@ public class Grep {
         List<String> result= new ArrayList<>();
         for(String s: strings){
             if(ignore) {
-                s.toLowerCase();
+                s = s.toLowerCase();
             }
             boolean contains = s.contains(word);
             if(contains && !inverted){
