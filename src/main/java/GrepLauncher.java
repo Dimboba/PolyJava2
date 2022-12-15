@@ -33,7 +33,7 @@ public class GrepLauncher {
                 strings.add(s);
             }
         }
-        catch(IOException ex){
+        catch(IOException ex){ //ловим исключение, и затем обрабатываем его
             System.err.println(ex.getMessage());
             return null;
         }
@@ -51,7 +51,7 @@ public class GrepLauncher {
             return null;
         }
     }
-    private void launch(String[] args){
+    private void launch( String[] args){
         CmdLineParser parser = new CmdLineParser(this);
 
         try{
@@ -69,6 +69,9 @@ public class GrepLauncher {
         else{
             result = Grep.toGrep(i, v, strings, word);
         }
+        writeFile(result);
+    }
+    private void writeFile(List<String> result){
         for(String s: result){
             System.out.println(s);
         }
