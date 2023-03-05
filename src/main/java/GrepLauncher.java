@@ -63,12 +63,9 @@ public class GrepLauncher {
         }
         List<String> result;
         List<String> strings = readFile(inputFileName);
-        if(r){
-            result = Grep.toGrepRegex(i, v, strings, word);
-        }
-        else{
-            result = Grep.toGrep(i, v, strings, word);
-        }
+        Grep grep = new Grep(i, v, r, strings, word);
+
+        result = grep.toGrep();
         writeFile(result);
     }
     private void writeFile(List<String> result){

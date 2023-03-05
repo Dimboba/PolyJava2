@@ -5,7 +5,32 @@ import java.util.regex.Pattern;
 
 public class Grep {
 
-    public static List<String> toGrep(boolean ignore, boolean inverted, List<String> strings, String word){
+    private boolean ignore;
+    private boolean inverted;
+    private boolean regex;
+    private List<String> strings;
+    private String word;
+
+    public void setIgnore(boolean ignore) { this.ignore = ignore; }
+    public void setInverted(boolean inverted) { this.inverted = inverted; }
+    public void setRegex(boolean regex) { this.regex = regex; }
+    public void setStrings(List<String> strings) { this.strings = strings; }
+    public void setWord(String word) { this.word = word; }
+
+
+    public Grep(boolean ignore, boolean inverted, boolean regex, List<String> strings, String word){
+        this.ignore = ignore;
+        this.inverted = inverted;
+        this.regex = regex;
+        this.strings = strings;
+        this.word = word;
+    }
+
+    public List<String> toGrep(){
+        if (regex) return toGrepRegex();
+        return  toSimpleGrep();
+    }
+    private List<String> toSimpleGrep(){
         List<String> result= new ArrayList<>();
         for(String s: strings){
             if(ignore) {
@@ -21,14 +46,14 @@ public class Grep {
         }
         return result;
     }
-    public static List<String> toGrepRegex(boolean ignore, boolean inverted, List<String> strings, String regex){
+    private List<String> toGrepRegex(){
         List<String> result = new ArrayList<>();
         Pattern pattern;
         if(ignore) {
-            pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+            pattern = Pattern.compile(word, Pattern.CASE_INSENSITIVE);
         }
         else{
-            pattern = Pattern.compile(regex);
+            pattern = Pattern.compile(word);
         }
         for(String s: strings) {
 
