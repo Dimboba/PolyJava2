@@ -33,10 +33,11 @@ public class Grep {
     private List<String> toSimpleGrep(){
         List<String> result= new ArrayList<>();
         for(String s: strings){
+            String line = s;
             if(ignore) {
-                s = s.toLowerCase();
+                line = line.toLowerCase();
             }
-            boolean contains = s.contains(word);
+            boolean contains = line.contains(word);
             if(contains && !inverted){
                 result.add(s);
             }

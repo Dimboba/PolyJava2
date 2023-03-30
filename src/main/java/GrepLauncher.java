@@ -24,7 +24,7 @@ public class GrepLauncher {
         new GrepLauncher().launch(args);
     }
 
-    private List<String> readFile(InputStream inputStream){
+    public List<String> readFile(InputStream inputStream){
         List<String> strings= new ArrayList<>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -33,25 +33,27 @@ public class GrepLauncher {
                 strings.add(s);
             }
         }
-        catch(IOException ex){ //ловим исключение, и затем обрабатываем его
+        catch(IOException ex){
+            System.err.println("Error: reading file is failed");
             System.err.println(ex.getMessage());
             return null;
         }
         return strings;
     }
 
-    private List<String> readFile(String inputStreamName) {
+    public List<String> readFile(String inputStreamName) {
         try {
             FileInputStream inputStream = new FileInputStream(inputStreamName);
             return readFile(inputStream);
         }
         catch(FileNotFoundException ex){
             //ex.printStackTrace();
+            System.err.println("Error: cannot find a file");
             System.err.println(ex.getMessage());
             return null;
         }
     }
-    private void launch( String[] args){
+    public void launch( String[] args){
         CmdLineParser parser = new CmdLineParser(this);
 
         try{
@@ -68,7 +70,7 @@ public class GrepLauncher {
         result = grep.toGrep();
         writeFile(result);
     }
-    private void writeFile(List<String> result){
+    public void writeFile(List<String> result){
         for(String s: result){
             System.out.println(s);
         }
